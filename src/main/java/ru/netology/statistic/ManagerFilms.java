@@ -4,6 +4,7 @@ public class ManagerFilms {
     private String[] movies = new String[0];
     private int limited;
 
+
     public ManagerFilms() {
         this.limited = 5;
     }
@@ -41,7 +42,6 @@ public class ManagerFilms {
         return result;
     }
 }
-
 
 
 
