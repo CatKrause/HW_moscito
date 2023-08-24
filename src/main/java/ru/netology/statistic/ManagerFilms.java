@@ -1,24 +1,25 @@
 package ru.netology.statistic;
 
 public class ManagerFilms {
-    private String[] movies = new String[0];
-    private int limited;
-
+    private String[] movies;
+    private int limit;
 
     public ManagerFilms() {
-        this.limited = 5;
+        this.limit = 5;
+        this.movies = new String[0];
     }
 
-    public ManagerFilms(int limited) {
-        this.limited = limited;
+    public ManagerFilms(int limit) {
+        this.limit = limit;
+        this.movies = new String[0];
     }
 
-    public void AddNewMovie(String movie) {
+    public void addNewMovie(String movie) {
         String[] tmp = new String[movies.length + 1];
         for (int i = 0; i < movies.length; i++) {
             tmp[i] = movies[i];
         }
-        tmp[movies.length] = movie;
+        tmp[tmp.length - 1] = movie;
         this.movies = tmp;
     }
 
@@ -27,21 +28,19 @@ public class ManagerFilms {
     }
 
     public String[] findLast() {
-        int resultLength;
-        if (movies.length < 5) {
-            resultLength = movies.length;
-        } else {
-            resultLength = 5;
-        }
-        String[] result = new String[resultLength];
+        int resultLength = Math.min(limit, movies.length);
+        String[] tmp = new String[resultLength];
 
         for (int i = 0; i < resultLength; i++) {
-            result[i] = movies[movies.length - resultLength + i];
+            tmp[i] = movies[movies.length - 1 - i];
         }
 
-        return result;
+        return tmp;
     }
+
 }
+
+
 
 
 

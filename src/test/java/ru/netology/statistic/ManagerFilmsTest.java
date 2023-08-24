@@ -1,68 +1,55 @@
 package ru.netology.statistic;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 public class ManagerFilmsTest {
-    @Test
-    public void addNewMovieTest() {
-        ManagerFilms manager = new ManagerFilms();
-
-        String[] expected = new String[0];
-        String[] actual = manager.findAll();
-
-        Assertions.assertArrayEquals(expected, actual);
-
-    }
 
     @Test
-    public void searchForAllMovies() {
+    public void DefaultLimit() {
         ManagerFilms manager = new ManagerFilms();
-        String[] expected = new String[0];
-        String[] actual = manager.findAll();
-
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void FindLastLessThan5Movies() {
-        ManagerFilms manager = new ManagerFilms();
-
-        manager.AddNewMovie("Movie 1");
-        manager.AddNewMovie("Movie 2");
-        manager.AddNewMovie("Movie 3");
-
+        manager.addNewMovie("Movie 1");
+        manager.addNewMovie("Movie 2");
+        manager.addNewMovie("Movie 3");
 
         String[] expected = {"Movie 1", "Movie 2", "Movie 3"};
-        String[] actual = manager.findLast();
-
-        Assertions.assertArrayEquals(expected, actual);
-
+        assertArrayEquals(expected, manager.findAll());
     }
 
     @Test
-    public void FindLastWithMoreThan5Movies() {
-        ManagerFilms manager = new ManagerFilms();
-        manager.AddNewMovie("Movie 1");
-        manager.AddNewMovie("Movie 2");
-        manager.AddNewMovie("Movie 3");
-        manager.AddNewMovie("Movie 4");
-        manager.AddNewMovie("Movie 5");
-        manager.AddNewMovie("Movie 6");
-        manager.AddNewMovie("Movie 7");
+    public void CustomLimit() {
+        ManagerFilms manager = new ManagerFilms(3);
+        manager.addNewMovie("Movie 1");
+        manager.addNewMovie("Movie 2");
+        manager.addNewMovie("Movie 3");
+        manager.addNewMovie("Movie 4");
 
-        String[] expected = {"Movie 3", "Movie 4", "Movie 5", "Movie 6", "Movie 7",};
-        String[] actual = manager.findLast();
-
-        Assertions.assertArrayEquals(expected, actual);
+        String[] expected = {"Movie 4", "Movie 3", "Movie 2"};
+        assertArrayEquals(expected, manager.findLast());
     }
 
     @Test
-    public void emptyList() {
+    public void FindAllEmpty() {
         ManagerFilms manager = new ManagerFilms();
-        String[] expected = new String[0];
-        String[] actual = manager.findLast();
+        String[] expected = {};
+        assertArrayEquals(expected, manager.findAll());
+    }
 
-        Assertions.assertArrayEquals(expected, actual);
+    @Test
+    public void FindLastEmpty() {
+        ManagerFilms manager = new ManagerFilms();
+        String[] expected = {};
+        assertArrayEquals(expected, manager.findLast());
+    }
+
+    @Test
+    public void FindLastLessThanLimit() {
+        ManagerFilms manager = new ManagerFilms(10);
+        manager.addNewMovie("Movie 1");
+        manager.addNewMovie("Movie 2");
+
+        String[] expected = {"Movie 2", "Movie 1"};
+        assertArrayEquals(expected, manager.findLast());
     }
 }
